@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['api', 'cors'],'prefix' => 'api/v1'],function(){
     Route::get('users','ApiControllers\UserController@getUserList');
     Route::post('saveusers','ApiControllers\UserController@saveUser');
+    Route::post('login','ApiControllers\UserController@loginUser');
 });

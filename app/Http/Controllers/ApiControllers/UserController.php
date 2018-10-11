@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiControllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -41,6 +42,27 @@ class UserController extends Controller
         return response($res);
         
     }
+
+
+
+    /*
+     * Login User 
+     */
+    function loginUser(Request $request){
+        $res= array('status'=>'error','login'=>false,'code'=>402); 
+        $password = $request->get('password');
+        $email_address = $request->get('email_address');
+        $remember=true;
+        $credentials = $request->only('email_address', 'password');
+        if (Auth::attempt($credentials)) {
+            $res= array('status'=>'success','msg'=>'!! Success !!','user'=>Auth::user(),'code'=>200); 
+        }else{
+            $res= array('status'=>'error','msg'=>'Invalid Login Credentials!!','code'=>402);         
+        }
+        return response($res);
+    }
+    
+    
 
 
 
