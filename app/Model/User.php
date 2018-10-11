@@ -12,5 +12,6 @@ class User extends Model
      * @var string
      */
     protected $table = 'user';
+    public $timestamps = true;
     //
 }
