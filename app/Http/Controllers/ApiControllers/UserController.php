@@ -61,6 +61,28 @@ class UserController extends Controller
         }
         return response($res);
     }
+
+
+    /*
+     *@User Info
+     */
+    function getUserInfo(Request $request){
+        $res= array('status'=>'error','login'=>false,'code'=>402); 
+        $id = $request->get('id');
+        $userInfo = User::find($id);
+        if($userInfo){
+            $userInfoArr = array(
+                'id'=>$userInfo->id,
+                'name'=>$userInfo->first_name.' '.$userInfo->last_name,
+                'email'=>$userInfo->email_address
+                );
+            $res= array('status'=>'success','msg'=>'!! Success !!','user'=>$userInfoArr,'code'=>200); 
+        }else{
+            $res= array('status'=>'error','msg'=>'Invalid User Id!!','code'=>402);         
+        }
+        return response($res);
+        
+    }
     
     
 
