@@ -22,4 +22,8 @@ Route::group(['middleware' => ['api', 'cors'],'prefix' => 'api/v1'],function(){
     Route::post('saveusers','ApiControllers\UserController@saveUser');
     Route::post('login','ApiControllers\UserController@loginUser');
     Route::post('getuserinfo','ApiControllers\UserController@getUserInfo');
+
+    //For Post Controller
+    Route::post('createpost','ApiControllers\PostController@createNewPost');
+    Route::post('getuserpost','ApiControllers\PostController@getPostList');
 });
