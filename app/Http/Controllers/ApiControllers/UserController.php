@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\User;
 use Auth;
+use Log;
 
 class UserController extends Controller
 {
@@ -20,6 +21,16 @@ class UserController extends Controller
         $res=array('status'=>'success','results'=>$users);
         return response($res);
     }
+
+
+
+    function testAction(Request $request){
+        Log::info('This is some useful information.');
+        return view('user/home');
+
+    }
+
+
 
 
     /*

@@ -16,5 +16,17 @@ Route::get('/', function () {
 });
 
 Route::get('/user', function () {
-    return view('welcome');
+    
+});
+
+Route::get('/user/home', function () {
+    return view('user/home');
+});
+
+
+
+
+
+Route::group(['prefix'=>'user'], function () {
+	Route::get('test','ApiControllers\UserController@testAction')->name('test');
 });
