@@ -30,3 +30,8 @@ Route::get('/user/home', function () {
 Route::group(['prefix'=>'user'], function () {
 	Route::get('test','ApiControllers\UserController@testAction')->name('test');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/viewnotify', 'HomeController@readNotification')->name('viewNotification');
