@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Notifications\Seller;
+use Illuminate\Support\Facades\Redis;
 use App\User;
 use Auth;
 
@@ -19,6 +20,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+	
+
+	
     /**
      * Show the application dashboard.
      *
@@ -26,11 +30,16 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-      
+  
+    	Redis::set('name', 'Taylor');
+    	echo Redis::get('name'); die;
+
 
         $product = array('id'=>'100','name'=>'This is new Product');
-        $user =Auth::User()->id;
-        $request->user()->notify(new Seller);
+        $userId =Auth::User()->id;
+        $userObj = User::find($userId);
+        $request->user()->notify(new Seller($userObj));
+       
         //return response()->json('Notification sent.', 201);
         $id= Auth::user()->id;    
         $user = User::find($id);
@@ -50,10 +59,17 @@ class HomeController extends Controller
         $notifications = $query->get()->each(function ($n) {
             $n->created = $n->created_at->toIso8601String();
         });
-        return compact('notifications');
+        $allNotification = array();
         foreach ($user->unreadNotifications as $notification) {
-            $notification->markAsRead();
+        	$note = $notification->data;
+        	$allNotification[] = $note;
+        	$notification->markAsRead();
         }
+
+        return view('notification.notification',array(
+                   'notificationArr'=>$allNotification
+                )
+        ); 
 
     }
 

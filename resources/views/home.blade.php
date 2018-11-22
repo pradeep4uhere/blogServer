@@ -21,4 +21,10 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+Echo.private('App.User.' + userId)
+    .notification((notification) => {
+         console.log(notification.type);
+});
+</script>
 @endsection
